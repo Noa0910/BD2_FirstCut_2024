@@ -23,7 +23,12 @@ if len(uploaded_files) == 2:
 
         st.success('Both files were uploaded successfully!')
 
-       
+        st.write("Patients:")
+        st.dataframe(df_pacientes)
+        st.write("Responsible Parties:")
+        st.dataframe(df_responsables)
+
+        df_combined = pd.merge(df_pacientes, df_responsables, left_on="Responsable", right_on="Nombre", how="inner")
      
         
 
