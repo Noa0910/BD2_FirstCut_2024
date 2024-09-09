@@ -29,6 +29,13 @@ if len(uploaded_files) == 2:
         st.dataframe(df_responsables)
 
         df_combined = pd.merge(df_pacientes, df_responsables, left_on="Responsable", right_on="Nombre", how="inner")
+
+        df_final = df_combined[['Nombre_x', 'Apellido_x', 'Diagnóstico', 'Responsable', 'Parentesco']]
+        df_final.columns = ['Patient Name','Patient Last Name', 'Diagnosis', 'Responsible', 'Relationship']
+
+        st.write("Combined content:")
+        st.dataframe(df_final)
+
      
         
 
