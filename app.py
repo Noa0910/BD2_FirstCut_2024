@@ -18,6 +18,9 @@ if len(uploaded_files) == 2:
         file1 = uploaded_files[0]
         file2 = uploaded_files[1]
 
+        df_pacientes = pd.read_excel(file1)
+        df_responsables = pd.read_excel(file2)
+
        
      
         
