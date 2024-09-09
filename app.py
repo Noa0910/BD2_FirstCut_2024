@@ -4,7 +4,6 @@ import mysql.connector
 from dotenv import load_dotenv
 import os
 
-
 load_dotenv()
 
 st.title('Upload and Merge Patient and Responsible Party Files')
@@ -22,15 +21,13 @@ def connect_to_db():
     )
     return conn
 
-# Function to insert data into the database
 def insert_into_db(df):
     conn = connect_to_db()
     cursor = conn.cursor()
     
-    # Insert each row of the DataFrame into the table
     for index, row in df.iterrows():
         sql = """INSERT INTO pacientes_responsables 
-                 (Patient Name, Patient Last Name, Diagnosis, Responsible, Relationship) 
+                 (`Patient Name`, `Patient Last Name`, `Diagnosis`, `Responsible`, `Relationship`) 
                  VALUES (%s, %s, %s, %s, %s)"""
         values = (row['Patient Name'], row['Patient Last Name'], row['Diagnosis'], row['Responsible'], row['Relationship'])
         cursor.execute(sql, values)
@@ -54,10 +51,12 @@ if len(uploaded_files) == 2:
         st.write("Responsible Parties:")
         st.dataframe(df_responsables)
 
+        # Ajusta las claves de combinación a los nombres reales en tus archivos Excel
         df_combined = pd.merge(df_pacientes, df_responsables, left_on="Responsable", right_on="Nombre", how="inner")
 
+        # Asegúrate de que estos nombres coincidan con los nombres en tus DataFrames
         df_final = df_combined[['Nombre_x', 'Apellido_x', 'Diagnóstico', 'Responsable', 'Parentesco']]
-        df_final.columns = ['Patient Name','Patient Last Name', 'Diagnosis', 'Responsible', 'Relationship']
+        df_final.columns = ['Patient Name', 'Patient Last Name', 'Diagnosis', 'Responsible', 'Relationship']
 
         st.write("Combined content:")
         st.dataframe(df_final)
@@ -65,9 +64,6 @@ if len(uploaded_files) == 2:
         if st.button('Save to Database'):
             insert_into_db(df_final)
             st.success('Data successfully saved to the database.')
-
-     
-        
 
     except Exception as e:
         st.error(f"Error processing the Excel files: {e}")
