@@ -21,6 +21,8 @@ if len(uploaded_files) == 2:
         df_pacientes = pd.read_excel(file1)
         df_responsables = pd.read_excel(file2)
 
+        st.success('Both files were uploaded successfully!')
+
        
      
         
