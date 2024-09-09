@@ -30,9 +30,9 @@ def insert_into_db(df):
     # Insert each row of the DataFrame into the table
     for index, row in df.iterrows():
         sql = """INSERT INTO pacientes_responsables 
-                 (nombre_paciente, apellido_paciente, diagnostico, responsable, parentesco) 
+                 (Patient Name, Patient Last Name, Diagnosis, Responsible, Relationship) 
                  VALUES (%s, %s, %s, %s, %s)"""
-        values = (row['Nombre Paciente'], row['Apellido Paciente'], row['Diagnóstico'], row['Responsable'], row['Parentesco'])
+        values = (row['Patient Name'], row['Patient Last Name'], row['Diagnosis'], row['Responsible'], row['Relationship'])
         cursor.execute(sql, values)
 
     conn.commit()
